@@ -1,0 +1,158 @@
+# Visualize on https://erd.surge.sh
+# or https://quick-erd.surge.sh
+#
+# Relationship Types
+#  -    - one to one
+#  -<   - one to many
+#  >-   - many to one
+#  >-<  - many to many
+#  -0   - one to zero or one
+#  0-   - zero or one to one
+#  0-0  - zero or one to zero or one
+#  -0<  - one to zero or many
+#  >0-  - zero or many to one
+#
+////////////////////////////////////
+
+department
+----------
+id integer PK
+name varchar(255)
+
+
+job_title
+----------
+id integer PK
+type varchar(255)
+department_id fk -< department.id
+
+access_level 
+-------------
+id integer PK
+level varcha(255)
+
+department_relation
+----------
+id integer PK
+father_department_id fk -< department.id
+child_department_id fk -< department.id
+
+users
+----
+id integer PK
+gender varchar(50)
+name varcha(255)
+email varchar(255)
+address varchar(255)
+job_nature varchar(255)
+username varchar(255)
+password varchar(255)
+contract varchar(255)
+mpf varchar(255)
+birthday timestamp
+employ_date timestamp
+termination_date timestamp
+working_time timestamp
+salary integer
+annual_leave_fixed integer
+sick_leave_fixed integer
+bank_account integer
+phone integer
+access_level_id  fk - access_level.id
+job_title_id fk - job_title.id
+created_at timestamp
+updated_at timestamp
+
+
+department_approver
+----------
+id integer PK
+department_id fk -< department.id
+user_id fk -< users.id
+
+
+leave_type
+----------
+id integer PK
+type varchar(255)
+short_form varchar(255)
+one_time_day_off (boolean)
+pay_leave (boolean)
+
+leave_request
+-------------
+id integer PK
+staff_id fk -< users.id
+approved_staff_id fk -< users.id
+leave_type_id fk - leave_type.id
+start_date timestamp
+total_date integer
+remark varchar(1000)
+status enum(pending, approved, rejected)
+created_at timestamp
+updated_at timestamp
+
+pic_request_leave
+---
+id
+req_id fk - leave_request.id
+pic integer
+
+claim_type
+----------
+id integer PK
+type varchar(255)
+
+claim_request
+----------
+id integer PK
+staff_id fk -< users.id
+approved_staff_id fk -< users.id
+claim_type fk - claim_type.id
+amount integer
+remark varchar(1000)
+status enum(pending, approved, rejected)
+created_at timestamp
+updated_at timestamp
+
+pic_request_claim
+---
+id
+req_id fk - claim_request.id
+pic integer
+
+
+schedule_list
+-------------
+id integer PK
+staff_id fk -< users.id
+start_date timestamp
+end_date timestamp
+title varchar(255)
+remark varchar(255)
+label varchar(255)
+
+check_in_record
+-------------
+id integer PK
+staff_id fk -< users.id
+ip_address number
+created_at timestamp
+updated_at timestamp
+
+# view: (77, 137)
+# zoom: 0.525
+# leave_request (848, 28)
+# claim_request (42, 608)
+# pic_request_leave (1394, 97)
+# pic_request_claim (86, 442)
+# schedule_list (1169, 306)
+# check_in_record (75, 160)
+# department (1123, 558)
+# job_title (871, 696)
+# access_level (879, 586)
+# department_relation (1334, 513)
+# users (549, 351)
+# department_approver (873, 425)
+# leave_type (433, 101)
+# claim_type (35, 336)
